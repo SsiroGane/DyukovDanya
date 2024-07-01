@@ -1,4 +1,4 @@
-#include "stdafx.h" // подключение библиотек
+#include "stdafx.h" // РїРѕРґРєР»СЋС‡РµРЅРёРµ Р±РёР±Р»РёРѕС‚РµРє
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
@@ -11,7 +11,8 @@ using namespace std;
 using namespace System;
 using namespace System::IO;
 
-#define ENTER 13 // обозначение кнопок 
+// РѕР±РѕР·РЅР°С‡РµРЅРёРµ РєРЅРѕРїРѕРє 
+#define ENTER 13  
 #define ESC 27
 #define UP 72
 #define DOWN 80
@@ -19,35 +20,35 @@ using namespace System::IO;
 #define END 79
 
 const char dan[8][70] = {
-    "Какая максимальная продолжительность среди всех фильмов?",
-    "Количество фильмов жанра \"драма\"?                       ",
-    "Алфавитный порядок фильмов                              ",
-    "Какой фильм вышел раньше всех?                          ",
-    "Обратный алфавитный список фильмов                      ",
-    "Фильмы из X страны с продолжительностью > X минут       ",
-    "Диаграмма                                               ",                                    
-    "Выход                                                   ",
-}; //задание пунктов меню
+    "РљР°РєР°СЏ РјР°РєСЃРёРјР°Р»СЊРЅР°СЏ РїСЂРѕРґРѕР»Р¶РёС‚РµР»СЊРЅРѕСЃС‚СЊ СЃСЂРµРґРё РІСЃРµС… С„РёР»СЊРјРѕРІ?",
+    "РљРѕР»РёС‡РµСЃС‚РІРѕ С„РёР»СЊРјРѕРІ Р¶Р°РЅСЂР° \"РґСЂР°РјР°\"?                       ",
+    "РђР»С„Р°РІРёС‚РЅС‹Р№ РїРѕСЂСЏРґРѕРє С„РёР»СЊРјРѕРІ                              ",
+    "РљР°РєРѕР№ С„РёР»СЊРј РІС‹С€РµР» СЂР°РЅСЊС€Рµ РІСЃРµС…?                          ",
+    "РћР±СЂР°С‚РЅС‹Р№ Р°Р»С„Р°РІРёС‚РЅС‹Р№ СЃРїРёСЃРѕРє С„РёР»СЊРјРѕРІ                      ",
+    "Р¤РёР»СЊРјС‹ РёР· X СЃС‚СЂР°РЅС‹ СЃ РїСЂРѕРґРѕР»Р¶РёС‚РµР»СЊРЅРѕСЃС‚СЊСЋ > X РјРёРЅСѓС‚       ",
+    "Р”РёР°РіСЂР°РјРјР°                                               ",                                    
+    "Р’С‹С…РѕРґ                                                   ",
+}; // Р·Р°РґР°РЅРёРµ РїСѓРЅРєС‚РѕРІ РјРµРЅСЋ
 const char BlankLine[] = "                                                        ";
 
 struct z {
-    char name[40]; //название фильма
-    char janr[20]; //жанр фильма
-    char country[20]; //страна производства
-    int god; //год выпуска
-    int prod; // продолжительность
-}; //шаблон структуры для исходных данных
+    char name[40]; // РЅР°Р·РІР°РЅРёРµ С„РёР»СЊРјР°
+    char janr[20]; // Р¶Р°РЅСЂ С„РёР»СЊРјР°
+    char country[20]; // СЃС‚СЂР°РЅР° РїСЂРѕРёР·РІРѕРґСЃС‚РІР°
+    int god; // РіРѕРґ РІС‹РїСѓСЃРєР°
+    int prod; // РїСЂРѕРґРѕР»Р¶РёС‚РµР»СЊРЅРѕСЃС‚СЊ
+}; // С€Р°Р±Р»РѕРЅ СЃС‚СЂСѓРєС‚СѓСЂС‹ РґР»СЏ РёСЃС…РѕРґРЅС‹С… РґР°РЅРЅС‹С…
 
 struct sp {
-    char name[40]; //название фильма
-    int prod; //продолжительность
-    struct sp* sled; //ссылка на следующий фильм
-    struct sp* pred; //ссылка на предыдущий фильм
-}; //шаблон структуры для списка фильмов
+    char name[40]; // РЅР°Р·РІР°РЅРёРµ С„РёР»СЊРјР°
+    int prod; // РїСЂРѕРґРѕР»Р¶РёС‚РµР»СЊРЅРѕСЃС‚СЊ
+    struct sp* sled; // СЃСЃС‹Р»РєР° РЅР° СЃР»РµРґСѓСЋС‰РёР№ С„РёР»СЊРј
+    struct sp* pred; // СЃСЃС‹Р»РєР° РЅР° РїСЂРµРґС‹РґСѓС‰РёР№ С„РёР»СЊРј
+}; // С€Р°Р±Р»РѕРЅ СЃС‚СЂСѓРєС‚СѓСЂС‹ РґР»СЏ СЃРїРёСЃРєР° С„РёР»СЊРјРѕРІ
 
 struct sp* spisok = nullptr;
 
-int menu(int); //указание шаблонов используемых функций
+int menu(int); // СѓРєР°Р·Р°РЅРёРµ С€Р°Р±Р»РѕРЅРѕРІ РёСЃРїРѕР»СЊР·СѓРµРјС‹С… С„СѓРЅРєС†РёР№
 void maxim(struct z*, int);
 void kolvo(struct z*, int);
 void alfalist(struct z*, int);
@@ -64,53 +65,53 @@ int main(array<System::String ^> ^args) {
     FILE *in;
     struct z *films;
 
-    setlocale(LC_CTYPE, "Russian"); //поддержка русского языка
-    Console::CursorVisible::set(false); //отключение видимости курсора
+    setlocale(LC_CTYPE, "Russian"); // РїРѕРґРґРµСЂР¶РєР° СЂСѓСЃСЃРєРѕРіРѕ СЏР·С‹РєР°
+    Console::CursorVisible::set(false); // РѕС‚РєР»СЋС‡РµРЅРёРµ РІРёРґРёРјРѕСЃС‚Рё РєСѓСЂСЃРѕСЂР°
     Console::BufferHeight = Console::WindowHeight;
     Console::BufferWidth = Console::WindowWidth;
 
     if ((in = fopen("Films.txt", "r")) == NULL) {
-        printf("\nФайл Films.txt не открыт!");
+        printf("\nР¤Р°Р№Р» Films.txt РЅРµ РѕС‚РєСЂС‹С‚!");
         getch();
         exit(1);
     }
 
-    fscanf(in, "%d", &NC); //считывание числа строк в исходном файле
-    films = (struct z*)malloc(NC * sizeof(struct z)); //выделение памяти
+    fscanf(in, "%d", &NC); // СЃС‡РёС‚С‹РІР°РЅРёРµ С‡РёСЃР»Р° СЃС‚СЂРѕРє РІ РёСЃС…РѕРґРЅРѕРј С„Р°Р№Р»Рµ
+    films = (struct z*)malloc(NC * sizeof(struct z)); // РІС‹РґРµР»РµРЅРёРµ РїР°РјСЏС‚Рё
 
-    for (i = 0; i < NC; i++) //чтение из файла
+    for (i = 0; i < NC; i++) //С‡С‚РµРЅРёРµ РёР· С„Р°Р№Р»Р°
         fscanf(in, "%s%s%s%d%d", films[i].name,
             films[i].janr, films[i].country,
             &films[i].god, &films[i].prod);
 
-    printf("Название                                 Жанр                 Страна                 Год выпуска   Продолжительность");
+    printf("РќР°Р·РІР°РЅРёРµ                                 Р–Р°РЅСЂ                 РЎС‚СЂР°РЅР°                 Р“РѕРґ РІС‹РїСѓСЃРєР°   РџСЂРѕРґРѕР»Р¶РёС‚РµР»СЊРЅРѕСЃС‚СЊ");
     printf("                                                                                   \n"); 
-    for (i = 0; i < NC; i++) //вывод данных на экран
+    for (i = 0; i < NC; i++) // РІС‹РІРѕРґ РґР°РЅРЅС‹С… РЅР° СЌРєСЂР°РЅ
         printf("\n%-40s %-20s %-20s %10d %15d",
             films[i].name, films[i].janr,
             films[i].country, films[i].god,
             films[i].prod);
     _getch();
 
-    while (1) { //создание области меню
+    while (1) { // СЃРѕР·РґР°РЅРёРµ РѕР±Р»Р°СЃС‚Рё РјРµРЅСЋ
         Console::ForegroundColor = ConsoleColor::Green;
         Console::BackgroundColor = ConsoleColor::Black;
         Console::Clear();
         Console::ForegroundColor = ConsoleColor::Green;
         Console::BackgroundColor = ConsoleColor::Black;
-        Console::CursorLeft = 10; //точка начала меню
+        Console::CursorLeft = 10; // С‚РѕС‡РєР° РЅР°С‡Р°Р»Р° РјРµРЅСЋ
         Console::CursorTop = 4;
         printf(BlankLine);
 
-        for (i = 0; i < 8; i++) { //вывод вопросов
+        for (i = 0; i < 8; i++) { // РІС‹РІРѕРґ РІРѕРїСЂРѕСЃРѕРІ
             Console::CursorLeft = 10;
             Console::CursorTop = i + 5;
             printf("%s", dan[i]);
         }
-        Console::CursorLeft = 10; //точка конца меню
+        Console::CursorLeft = 10; // С‚РѕС‡РєР° РєРѕРЅС†Р° РјРµРЅСЋ
         Console::CursorTop = 12;
         printf(BlankLine);
-        n = menu(8); //выбор вопроса в меню
+        n = menu(8); // РІС‹Р±РѕСЂ РІРѕРїСЂРѕСЃР° РІ РјРµРЅСЋ
         switch (n) {
             case 1: maxim(films, NC); break;
             case 2: kolvo(films, NC); break;
@@ -121,10 +122,10 @@ int main(array<System::String ^> ^args) {
             case 7: diagram(films, NC); break;
             case 8: save_to_file("output.txt"); exit(0);
         }
-    } //конец цикла while(1)
+    } //РєРѕРЅРµС† С†РёРєР»Р° while(1)
 
     return 0;
-} //конец main()
+} //РєРѕРЅРµС† main()
 
 int menu(int n) {
     int y1 = 0, y2 = n - 1;
@@ -154,11 +155,11 @@ int menu(int n) {
     exit(0);
 }
 
-void maxim(struct z* film, int NC) { //функция поиска максимальной продолжительности фильма
+void maxim(struct z* film, int NC) { // С„СѓРЅРєС†РёСЏ РїРѕРёСЃРєР° РјР°РєСЃРёРјР°Р»СЊРЅРѕР№ РїСЂРѕРґРѕР»Р¶РёС‚РµР»СЊРЅРѕСЃС‚Рё С„РёР»СЊРјР°
     int i = 0;
     struct z best;
     strcpy(best.name, film[0].name); 
-    best.prod = film[0].prod; //в переменную структуры записывается нулевой элемент массива структур
+    best.prod = film[0].prod; // РІ РїРµСЂРµРјРµРЅРЅСѓСЋ СЃС‚СЂСѓРєС‚СѓСЂС‹ Р·Р°РїРёСЃС‹РІР°РµС‚СЃСЏ РЅСѓР»РµРІРѕР№ СЌР»РµРјРµРЅС‚ РјР°СЃСЃРёРІР° СЃС‚СЂСѓРєС‚СѓСЂ
     for (i = 1; i < NC; i++)
         if (film[i].prod > best.prod) {
             strcpy(best.name, film[i].name);
@@ -166,25 +167,25 @@ void maxim(struct z* film, int NC) { //функция поиска максимальной продолжительн
         }
     Console::ForegroundColor = ConsoleColor::White;
     Console::BackgroundColor = ConsoleColor::Black;
-    Console::CursorLeft = 10; //область начала вывода ответа
+    Console::CursorLeft = 10; // РѕР±Р»Р°СЃС‚СЊ РЅР°С‡Р°Р»Р° РІС‹РІРѕРґР° РѕС‚РІРµС‚Р°
     Console::CursorTop = 15;
-    printf("Максимальную продолжительность %d минут", best.prod); //вывод ответа
+    printf("РњР°РєСЃРёРјР°Р»СЊРЅСѓСЋ РїСЂРѕРґРѕР»Р¶РёС‚РµР»СЊРЅРѕСЃС‚СЊ %d РјРёРЅСѓС‚", best.prod); // РІС‹РІРѕРґ РѕС‚РІРµС‚Р°
     Console::CursorLeft = 10;
     Console::CursorTop = 16;
-    printf("имеет фильм %s", best.name);
+    printf("РёРјРµРµС‚ С„РёР»СЊРј %s", best.name);
     _getch();
 }
 
-void kolvo(struct z* film, int NC) { //функция поиска количества фильмов жанра драма
+void kolvo(struct z* film, int NC) { // С„СѓРЅРєС†РёСЏ РїРѕРёСЃРєР° РєРѕР»РёС‡РµСЃС‚РІР° С„РёР»СЊРјРѕРІ Р¶Р°РЅСЂР° РґСЂР°РјР°
     int i, k = 0;
     for (i = 0; i < NC; i++)
-        if (strcmp(film[i].janr, "драма") == 0) //сравнение жанра текущего фильма с "драма"
+        if (strcmp(film[i].janr, "РґСЂР°РјР°") == 0) // СЃСЂР°РІРЅРµРЅРёРµ Р¶Р°РЅСЂР° С‚РµРєСѓС‰РµРіРѕ С„РёР»СЊРјР° СЃ "РґСЂР°РјР°"
             k++;
     Console::ForegroundColor = ConsoleColor::White;
     Console::BackgroundColor = ConsoleColor::Black;
     Console::CursorLeft = 10;
     Console::CursorTop = 15;
-    printf("Фильмов \"драма\" всего: %d", k); //вывод количества фильмов жанра "драма" на экран
+    printf("Р¤РёР»СЊРјРѕРІ \"РґСЂР°РјР°\" РІСЃРµРіРѕ: %d", k); // РІС‹РІРѕРґ РєРѕР»РёС‡РµСЃС‚РІР° С„РёР»СЊРјРѕРІ Р¶Р°РЅСЂР° "РґСЂР°РјР°" РЅР° СЌРєСЂР°РЅ
     _getch();
 }
 
@@ -192,13 +193,13 @@ void vstavka(struct z* film, int NC, char* name) {
     int i;
     struct sp* nov, * nt, * z = nullptr;
     for (nt = spisok; nt != nullptr && strcmp(nt->name, name) < 0; z = nt, nt = nt->sled);
-	//цикл ищет позицию для вставки нового узла, при этом сохраняется указатель на предыдущий узел (z)
+	// С†РёРєР» РёС‰РµС‚ РїРѕР·РёС†РёСЋ РґР»СЏ РІСЃС‚Р°РІРєРё РЅРѕРІРѕРіРѕ СѓР·Р»Р°, РїСЂРё СЌС‚РѕРј СЃРѕС…СЂР°РЅСЏРµС‚СЃСЏ СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РїСЂРµРґС‹РґСѓС‰РёР№ СѓР·РµР» z
     if (nt && strcmp(nt->name, name) == 0) return;
-    nov = (struct sp*)malloc(sizeof(struct sp)); //выделение памяти для нового узла
+    nov = (struct sp*)malloc(sizeof(struct sp)); //РІС‹РґРµР»РµРЅРёРµ РїР°РјСЏС‚Рё РґР»СЏ РЅРѕРІРѕРіРѕ СѓР·Р»Р°
     strcpy(nov->name, name);
     nov->sled = nt;
     nov->prod = 0;
-    for (i = 0; i < NC; i++) //цикл суммирует значения prod всех фильмов с именем name
+    for (i = 0; i < NC; i++) // С†РёРєР» СЃСѓРјРјРёСЂСѓРµС‚ Р·РЅР°С‡РµРЅРёСЏ prod РІСЃРµС… С„РёР»СЊРјРѕРІ СЃ РёРјРµРЅРµРј name
         if (strcmp(film[i].name, name) == 0)
             nov->prod += film[i].prod;
     if (!z) spisok = nov;
@@ -207,12 +208,12 @@ void vstavka(struct z* film, int NC, char* name) {
 
 void make_list(struct z* film, int NC) {
     int i;
-    for (i = 0; i < NC; i++) //цикл для вставки каждого элемента из массива `film` в список `spisok`
+    for (i = 0; i < NC; i++) // С†РёРєР» РґР»СЏ РІСЃС‚Р°РІРєРё РєР°Р¶РґРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РёР· РјР°СЃСЃРёРІР° film РІ СЃРїРёСЃРѕРє spisok
         vstavka(film, NC, film[i].name);
     struct sp* nt = spisok;
     struct sp* next = nt->sled;
     spisok->pred = nullptr;
-    for (; next != nullptr; nt = next, next = next->sled) // Цикл для установки обратных ссылок
+    for (; next != nullptr; nt = next, next = next->sled) // С†РёРєР» РґР»СЏ СѓСЃС‚Р°РЅРѕРІРєРё РѕР±СЂР°С‚РЅС‹С… СЃСЃС‹Р»РѕРє
         next->pred = nt;
 }
 
@@ -222,11 +223,11 @@ void alfalist(struct z* film, int NC) {
     Console::ForegroundColor = ConsoleColor::Green;
     Console::BackgroundColor = ConsoleColor::Black;
     Console::Clear();
-    if (!spisok) make_list(film, NC); //если список пуст, вызвать функцию make_list для его заполнения
-    printf("\n Алфавитный список фильмов:");
+    if (!spisok) make_list(film, NC); // РµСЃР»Рё СЃРїРёСЃРѕРє РїСѓСЃС‚, РІС‹Р·РІР°С‚СЊ С„СѓРЅРєС†РёСЋ make_list РґР»СЏ РµРіРѕ Р·Р°РїРѕР»РЅРµРЅРёСЏ
+    printf("\n РђР»С„Р°РІРёС‚РЅС‹Р№ СЃРїРёСЃРѕРє С„РёР»СЊРјРѕРІ:");
     printf("\n    ===============================\n");
-    for (nt = spisok; nt != nullptr; nt = nt->sled) //проход по всему списку spisok
-        printf("\n %-20s %10d", nt->name, nt->prod); //вывод названия и продолжительности фильмов
+    for (nt = spisok; nt != nullptr; nt = nt->sled) // РїСЂРѕС…РѕРґ РїРѕ РІСЃРµРјСѓ СЃРїРёСЃРєСѓ spisok
+        printf("\n %-20s %10d", nt->name, nt->prod); // РІС‹РІРѕРґ РЅР°Р·РІР°РЅРёСЏ Рё РїСЂРѕРґРѕР»Р¶РёС‚РµР»СЊРЅРѕСЃС‚Рё С„РёР»СЊРјРѕРІ
     _getch();
 }
 
@@ -236,11 +237,11 @@ void reverse_alfalist(struct z* film, int NC) {
     Console::ForegroundColor = ConsoleColor::Green;
     Console::BackgroundColor = ConsoleColor::Black;
     Console::Clear();
-    if (!spisok) make_list(film, NC); //если список пуст, вызвать функцию make_list для его заполнения
-    printf("\n Обратный алфавитный список фильмов:");
+    if (!spisok) make_list(film, NC); // РµСЃР»Рё СЃРїРёСЃРѕРє РїСѓСЃС‚, РІС‹Р·РІР°С‚СЊ С„СѓРЅРєС†РёСЋ make_list РґР»СЏ РµРіРѕ Р·Р°РїРѕР»РЅРµРЅРёСЏ
+    printf("\n РћР±СЂР°С‚РЅС‹Р№ Р°Р»С„Р°РІРёС‚РЅС‹Р№ СЃРїРёСЃРѕРє С„РёР»СЊРјРѕРІ:");
     printf("\n    ===============================\n");
-    for (nt = spisok; nt->sled != nullptr; nt = nt->sled); //проход до конца списка
-    for (; nt != nullptr; nt = nt->pred) //проход по списку в обратном порядке
+    for (nt = spisok; nt->sled != nullptr; nt = nt->sled); // РїСЂРѕС…РѕРґ РґРѕ РєРѕРЅС†Р° СЃРїРёСЃРєР°
+    for (; nt != nullptr; nt = nt->pred) // РїСЂРѕС…РѕРґ РїРѕ СЃРїРёСЃРєСѓ РІ РѕР±СЂР°С‚РЅРѕРј РїРѕСЂСЏРґРєРµ
         printf("\n %-20s %10d", nt->name, nt->prod);
     _getch();
 }
@@ -248,20 +249,20 @@ void reverse_alfalist(struct z* film, int NC) {
 void first(struct z* film, int NC) {   
     int i;   
     struct z* best = film;   
-    for (i = 1; i < NC; i++) //проход по массиву фильмов   
+    for (i = 1; i < NC; i++) // РїСЂРѕС…РѕРґ РїРѕ РјР°СЃСЃРёРІСѓ С„РёР»СЊРјРѕРІ  
         if (film[i].god < best->god) best = &film[i];   
     Console::ForegroundColor = ConsoleColor::White;   
     Console::BackgroundColor = ConsoleColor::Black;   
     Console::CursorLeft = 10;   
     Console::CursorTop = 15;   
-    printf("Фильм, который вышел раньше всех, жанр %s, продолжительность %d минут.",   
+    printf("Р¤РёР»СЊРј, РєРѕС‚РѕСЂС‹Р№ РІС‹С€РµР» СЂР°РЅСЊС€Рµ РІСЃРµС…, Р¶Р°РЅСЂ %s, РїСЂРѕРґРѕР»Р¶РёС‚РµР»СЊРЅРѕСЃС‚СЊ %d РјРёРЅСѓС‚.",   
         best->janr, best->prod);   
     Console::CursorLeft = 10;   
     Console::CursorTop = 16;   
-    printf("называется %s", best->name);   
+    printf("РЅР°Р·С‹РІР°РµС‚СЃСЏ %s", best->name);   
     Console::CursorLeft = 10;   
     Console::CursorTop = 17;   
-    printf("Вышел в %d году", best->god);   
+    printf("Р’С‹С€РµР» РІ %d РіРѕРґСѓ", best->god);   
     _getch();   
 }
 
@@ -270,28 +271,28 @@ void strana(struct z* film, int NC) {
     char country[20];
 
 	setlocale(LC_ALL, "Russian");
-    SetConsoleCP(1251); //устанавливаем кодировку ввода
-    SetConsoleOutputCP(1251); //устанавливаем кодировку вывода
+    SetConsoleCP(1251); // СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј РєРѕРґРёСЂРѕРІРєСѓ РІРІРѕРґР°
+    SetConsoleOutputCP(1251); // СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј РєРѕРґРёСЂРѕРІРєСѓ РІС‹РІРѕРґР°
 
-    //ввод данных от пользователя
+    // РІРІРѕРґ РґР°РЅРЅС‹С… РѕС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
     Console::ForegroundColor = ConsoleColor::Green;
     Console::BackgroundColor = ConsoleColor::Black;
     Console::Clear();
     
     Console::CursorLeft = 10;
     Console::CursorTop = 5;
-    printf("Введите страну: "); //запрос на ввод страны
+    printf("Р’РІРµРґРёС‚Рµ СЃС‚СЂР°РЅСѓ: "); // Р·Р°РїСЂРѕСЃ РЅР° РІРІРѕРґ СЃС‚СЂР°РЅС‹
     scanf("%s", country);
 
     Console::CursorLeft = 10;
     Console::CursorTop = 7;
-    printf("Введите продолжительность: "); //запрос на ввод продолжительности
+    printf("Р’РІРµРґРёС‚Рµ РїСЂРѕРґРѕР»Р¶РёС‚РµР»СЊРЅРѕСЃС‚СЊ: "); // Р·Р°РїСЂРѕСЃ РЅР° РІРІРѕРґ РїСЂРѕРґРѕР»Р¶РёС‚РµР»СЊРЅРѕСЃС‚Рё
     scanf("%d", &duration);
 
-    //вывод отфильтрованных фильмов
+    // РІС‹РІРѕРґ РѕС‚С„РёР»СЊС‚СЂРѕРІР°РЅРЅС‹С… С„РёР»СЊРјРѕРІ
     Console::Clear();
-    printf("\n Фильмы из %s с продолжительностью > %d минут \n", country, duration);
-    printf("\n Фильм                Продолжительность");
+    printf("\n Р¤РёР»СЊРјС‹ РёР· %s СЃ РїСЂРѕРґРѕР»Р¶РёС‚РµР»СЊРЅРѕСЃС‚СЊСЋ > %d РјРёРЅСѓС‚ \n", country, duration);
+    printf("\n Р¤РёР»СЊРј                РџСЂРѕРґРѕР»Р¶РёС‚РµР»СЊРЅРѕСЃС‚СЊ");
     printf("                                    \n");
     for (i = 0; i < NC; i++) {
         if ((strcmp(film[i].country, country) == 0) && (film[i].prod > duration)) {
@@ -302,25 +303,25 @@ void strana(struct z* film, int NC) {
 }
 
 void diagram(struct z* film, int NC) {
-    struct sp* nt; //объявление указателя на структуру sp
+    struct sp* nt; // РѕР±СЉСЏРІР»РµРЅРёРµ СѓРєР°Р·Р°С‚РµР»СЏ РЅР° СЃС‚СЂСѓРєС‚СѓСЂСѓ sp
     int len, i, NColor;
     long sum = 0;
-    char str1[40]; //объявление массива для хранения названия фильма
-    char str2[20]; //объявление массива для хранения процентного соотношения
+    char str1[40]; // РѕР±СЉСЏРІР»РµРЅРёРµ РјР°СЃСЃРёРІР° РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РЅР°Р·РІР°РЅРёСЏ С„РёР»СЊРјР°
+    char str2[20]; // РѕР±СЉСЏРІР»РµРЅРёРµ РјР°СЃСЃРёРІР° РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РїСЂРѕС†РµРЅС‚РЅРѕРіРѕ СЃРѕРѕС‚РЅРѕС€РµРЅРёСЏ
     System::ConsoleColor Color;
     Console::ForegroundColor = ConsoleColor::Green;
     Console::BackgroundColor = ConsoleColor::Black;
     Console::Clear();
-    for (i = 0; i < NC; i++) //проход по массиву фильмов
+    for (i = 0; i < NC; i++) // РїСЂРѕС…РѕРґ РїРѕ РјР°СЃСЃРёРІСѓ С„РёР»СЊРјРѕРІ
         sum = sum + film[i].prod;
     if (!spisok)
-        for (i = 0; i < NC; i++) //проход по массиву фильмов
-            vstavka(film, NC, film[i].name); //вставка фильма в список
+        for (i = 0; i < NC; i++) // РїСЂРѕС…РѕРґ РїРѕ РјР°СЃСЃРёРІСѓ С„РёР»СЊРјРѕРІ
+            vstavka(film, NC, film[i].name); // РІСЃС‚Р°РІРєР° С„РёР»СЊРјР° РІ СЃРїРёСЃРѕРє
     Color = ConsoleColor::Black;
     NColor = 0;
-    for (nt = spisok, i = 0; nt != nullptr; nt = nt->sled, i++) { //проход по spisok
-        sprintf(str1, "%s", nt->name); //запись названия фильма в str1
-        sprintf(str2, "%3.1f%%", (nt->prod * 100. / sum)); //запись процентного соотношения в str2
+    for (nt = spisok, i = 0; nt != nullptr; nt = nt->sled, i++) { // РїСЂРѕС…РѕРґ РїРѕ spisok
+        sprintf(str1, "%s", nt->name); // Р·Р°РїРёСЃСЊ РЅР°Р·РІР°РЅРёСЏ С„РёР»СЊРјР° РІ str1
+        sprintf(str2, "%3.1f%%", (nt->prod * 100. / sum)); // Р·Р°РїРёСЃСЊ РїСЂРѕС†РµРЅС‚РЅРѕРіРѕ СЃРѕРѕС‚РЅРѕС€РµРЅРёСЏ РІ str2
         Console::ForegroundColor = ConsoleColor::White;
         Console::BackgroundColor = ConsoleColor::Black;
         Console::CursorLeft = 5;
@@ -331,7 +332,7 @@ void diagram(struct z* film, int NC) {
         Console::BackgroundColor = ++Color;
         NColor++;
         Console::CursorLeft = 55;
-        for (len = 0; len < nt->prod * 100 / sum; len++) //проход по длине процентного соотношения
+        for (len = 0; len < nt->prod * 100 / sum; len++) // РїСЂРѕС…РѕРґ РїРѕ РґР»РёРЅРµ РїСЂРѕС†РµРЅС‚РЅРѕРіРѕ СЃРѕРѕС‚РЅРѕС€РµРЅРёСЏ
             printf(" ");
         if (NColor == 14) {
             Color = ConsoleColor::Black;
@@ -344,7 +345,7 @@ void diagram(struct z* film, int NC) {
 void save_to_file(const char* filename) {
     FILE* out = fopen(filename, "w");
     if (!out) {
-        printf("Ошибка открытия файла для записи.\n");
+        printf("РћС€РёР±РєР° РѕС‚РєСЂС‹С‚РёСЏ С„Р°Р№Р»Р° РґР»СЏ Р·Р°РїРёСЃРё.\n");
         return;
     }
     struct sp* nt = spisok;
