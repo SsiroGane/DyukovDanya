@@ -46,8 +46,6 @@ struct sp {
     struct sp* pred; // ссылка на предыдущий фильм
 }; // шаблон структуры для списка фильмов
 
-struct sp* spisok = nullptr;
-
 int menu(int); // указание шаблонов используемых функций
 void maxim(struct z*, int);
 void kolvo(struct z*, int);
